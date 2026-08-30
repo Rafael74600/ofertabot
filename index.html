@@ -21,16 +21,144 @@
 
     header {
       background: #171923;
-      padding: 25px 20px;
+      padding: 30px 20px;
       text-align: center;
       border-bottom: 1px solid #292d3a;
     }
 
     header h1 {
       color: #00e676;
-      font-size: 28px;
+      font-size: 32px;
+      margin-bottom: 10px;
     }
 
     header p {
-      margin-top: 8px;
-      color: #aaa
+      color: #aaa;
+      font-size: 16px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: #171923;
+      border: 1px solid #292d3a;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 12px;
+      border: 1px solid #353a49;
+      border-radius: 10px;
+      background: #252936;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #00e676;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #00c853;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    #resultado {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: #20232d;
+      border-radius: 10px;
+      line-height: 1.6;
+    }
+
+    #resultado a {
+      color: #00e676;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .online {
+      color: #00e676;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🤖 OfertaBot</h1>
+    <p>Gerador de ofertas automático</p>
+  </header>
+
+  <main>
+
+    <div class="card">
+      <h2>📦 Criar oferta</h2>
+
+      <input
+        type="text"
+        id="produto"
+        placeholder="Nome do produto"
+      >
+
+      <input
+        type="text"
+        id="preco"
+        placeholder="Preço"
+      >
+
+      <input
+        type="url"
+        id="link"
+        placeholder="Link do produto"
+      >
+
+      <button onclick="gerarOferta()">
+        🚀 Gerar oferta
+      </button>
+
+      <div id="resultado"></div>
+    </div>
+
+    <div class="card">
+      <h2>⚡ Status</h2>
+      <p class="online">● OfertaBot online</p>
+    </div>
+
+  </main>
+
+  <footer>
+   
