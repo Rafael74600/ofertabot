@@ -1,7 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/api/status", (req, res) => {
@@ -23,6 +25,7 @@ app.post("/api/gerar", (req, res) => {
   const oferta = `🔥 OFERTA 🔥
 
 📦 ${produto}
+
 💰 Por apenas R$ ${preco}
 
 🛒 Compre aqui:
@@ -32,7 +35,7 @@ ${link}
 
   res.json({
     sucesso: true,
-    oferta
+    oferta: oferta
   });
 });
 
