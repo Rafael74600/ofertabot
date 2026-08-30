@@ -3,77 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>OfertaBot</title>
 
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f1117;
+      background: #0f1015;
       color: white;
-      min-height: 100vh;
     }
 
     header {
-      background: #171923;
-      padding: 35px 20px;
       text-align: center;
-      border-bottom: 1px solid #292d3a;
+      padding: 55px 20px 50px;
+      background: #171922;
+      border-bottom: 1px solid #292b35;
     }
 
     header h1 {
+      margin: 0;
+      font-size: 48px;
       color: #00e676;
-      font-size: 42px;
-      margin-bottom: 12px;
     }
 
     header p {
-      color: #aaa;
-      font-size: 18px;
+      margin-top: 20px;
+      font-size: 21px;
+      color: #b8b8bd;
     }
 
-    main {
-      width: 100%;
-      max-width: 700px;
-      margin: auto;
-      padding: 35px 20px;
+    .container {
+      max-width: 620px;
+      margin: 55px auto;
+      padding: 0 20px;
     }
 
     .card {
-      background: #171923;
-      border: 1px solid #292d3a;
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 25px;
+      background: #181a23;
+      border: 1px solid #292c37;
+      border-radius: 28px;
+      padding: 35px;
     }
 
     .card h2 {
       color: #00e676;
-      font-size: 28px;
-      margin-bottom: 15px;
+      font-size: 32px;
+      margin-top: 0;
     }
 
     .card p {
-      color: #ccc;
-      font-size: 18px;
-      line-height: 1.5;
-      margin-bottom: 20px;
+      color: #c4c4c9;
+      font-size: 19px;
+      line-height: 1.6;
     }
 
     input {
       width: 100%;
       padding: 20px;
-      border-radius: 16px;
-      border: 1px solid #292d3a;
-      background: #0f1117;
+      margin-top: 20px;
+      border-radius: 18px;
+      border: 1px solid #30323d;
+      background: #0e0f14;
       color: white;
-      font-size: 18px;
-      margin-bottom: 15px;
+      font-size: 19px;
       outline: none;
     }
 
@@ -84,250 +81,29 @@
     button {
       width: 100%;
       padding: 20px;
+      margin-top: 20px;
       border: none;
-      border-radius: 16px;
-      background: #00d95f;
+      border-radius: 18px;
+      background: #00e676;
       color: #000;
       font-size: 20px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:disabled {
-      opacity: 0.6;
+    button:hover {
+      background: #00c965;
     }
 
-    #status {
-      margin-top: 20px;
-      color: #aaa;
-      text-align: center;
+    #resultado {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 18px;
+      background: #101219;
+      border: 1px solid #292c37;
     }
 
-    .oferta {
-      background: #10121a;
-      border: 1px solid #292d3a;
-      border-radius: 16px;
-      padding: 18px;
-      margin-top: 15px;
-    }
-
-    .oferta img {
-      width: 100%;
-      max-height: 220px;
-      object-fit: contain;
-      border-radius: 12px;
-      background: white;
-      margin-bottom: 15px;
-    }
-
-    .oferta h3 {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .preco {
-      color: #00e676;
-      font-size: 23px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .vendedor {
-      color: #999;
-      margin-bottom: 15px;
-    }
-
-    .link {
+    #resultado a {
       display: block;
-      text-align: center;
-      background: #00d95f;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 14px;
-      border-radius: 12px;
-    }
-
-    footer {
-      text-align: center;
-      color: #777;
-      padding: 30px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <h1>🤖 OfertaBot</h1>
-    <p>Encontre ofertas de forma rápida e fácil</p>
-  </header>
-
-  <main>
-
-    <section class="card">
-      <h2>🔎 Procurar oferta</h2>
-
-      <p>
-        Digite o nome do produto e o OfertaBot
-        buscará ofertas automaticamente.
-      </p>
-
-      <input
-        id="produto"
-        type="text"
-        placeholder="Ex: celular, notebook, fone..."
-      >
-
-      <button id="buscar" onclick="buscarOfertas()">
-        🔍 Procurar ofertas
-      </button>
-
-      <div id="status"></div>
-    </section>
-
-    <section class="card" id="resultados" style="display:none;">
-      <h2>🔥 Ofertas encontradas</h2>
-      <div id="lista"></div>
-    </section>
-
-  </main>
-
-  <footer>
-    OfertaBot © 2026
-  </footer>
-
-  <script>
-    async function buscarOfertas() {
-
-      const produto =
-        document.getElementById("produto").value.trim();
-
-      const status =
-        document.getElementById("status");
-
-      const resultados =
-        document.getElementById("resultados");
-
-      const lista =
-        document.getElementById("lista");
-
-      const botao =
-        document.getElementById("buscar");
-
-      if (!produto) {
-        status.textContent =
-          "⚠️ Digite um produto primeiro.";
-        return;
-      }
-
-      botao.disabled = true;
-      botao.textContent = "🔎 Procurando...";
-      status.textContent = "Aguarde, procurando ofertas...";
-      resultados.style.display = "none";
-      lista.innerHTML = "";
-
-      try {
-
-        const resposta = await fetch(
-          "/api/pesquisar?produto=" +
-          encodeURIComponent(produto)
-        );
-
-        const dados = await resposta.json();
-
-        if (!resposta.ok || !dados.sucesso) {
-          throw new Error(
-            dados.erro || "Erro ao buscar ofertas."
-          );
-        }
-
-        status.textContent =
-          "✅ " + dados.total +
-          " ofertas encontradas!";
-
-        if (dados.ofertas.length === 0) {
-          lista.innerHTML =
-            "<p>Nenhuma oferta encontrada.</p>";
-        } else {
-
-          dados.ofertas.forEach(oferta => {
-
-            const valor =
-              Number(oferta.preco)
-                .toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL"
-                });
-
-            const div =
-              document.createElement("div");
-
-            div.className = "oferta";
-
-            div.innerHTML = `
-              ${
-                oferta.imagem
-                ? `<img src="${oferta.imagem}" alt="Produto">`
-                : ""
-              }
-
-              <h3>📦 ${escapar(oferta.produto)}</h3>
-
-              <div class="preco">
-                💰 ${valor}
-              </div>
-
-              <div class="vendedor">
-                🏪 ${escapar(oferta.vendedor)}
-              </div>
-
-              <a
-                class="link"
-                href="${oferta.link}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                🛒 Ver oferta
-              </a>
-            `;
-
-            lista.appendChild(div);
-          });
-        }
-
-        resultados.style.display = "block";
-
-      } catch (erro) {
-
-        console.error(erro);
-
-        status.textContent =
-          "❌ Não foi possível buscar as ofertas.";
-
-      } finally {
-
-        botao.disabled = false;
-        botao.textContent = "🔍 Procurar ofertas";
-      }
-    }
-
-    function escapar(texto) {
-      const div = document.createElement("div");
-      div.textContent = texto || "";
-      return div.innerHTML;
-    }
-
-    document
-      .getElementById("produto")
-      .addEventListener("keydown", function(event) {
-
-        if (event.key === "Enter") {
-          buscarOfertas();
-        }
-
-      });
-  </script>
-
-</body>
-</html>
+      text
