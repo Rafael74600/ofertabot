@@ -1,51 +1,45 @@
 const express = require("express");
-const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 
-app.get("/api/status", (req, res) => {
-  res.json({
-    online: true,
-    mensagem: "OfertaBot online!"
-  });
+// Mostra o index.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.post("/api/gerar", async (req, res) => {
+// Pesquisa automática de produtos
+app.get("/api/pesquisar", async (req, res) => {
   try {
-    const { produto } = req.body;
+    const produto = req.query.produto;
 
     if (!produto) {
       return res.status(400).json({
-        erro: "Digite o nome de um produto."
+        erro: "Digite um produto para pesquisar."
       });
     }
 
-    // Pesquisa automática de ofertas
-    const busca = encodeURIComponent(produto);
+    const url =
+      "https://api.mercadolibre.com/sites/MLB/search?q=" +
+      encodeURIComponent(produto) +
+      "&limit=10";
 
-    const ofertas = [
-      {
-        produto: produto,
-        preco: "Pesquisar preço",
-        loja: "Mercado Livre",
-        link: `https://lista.mercadolivre.com.br/${busca}`
-      },
-      {
-        produto: produto,
-        preco: "Pesquisar preço",
-        loja: "Amazon",
-        link: `https://www.amazon.com.br/s?k=${busca}`
-      },
-      {
-        produto: produto,
-        preco: "Pesquisar preço",
-        loja: "Shopee",
-        link: `https://shopee.com.br/search?keyword=${busca}`
-      }
-    ];
+    const resposta = await fetch(url);
+
+    if (!resposta.ok) {
+      throw new Error("Erro na pesquisa");
+    }
+
+    const dados = await resposta.json();
+
+    const ofertas = dados.results.map(item => ({
+      produto: item.title,
+      preco: item.price,
+      link: item.permalink,
+      imagem: item.thumbnail
+    }));
 
     res.json({
       sucesso: true,
@@ -58,7 +52,7 @@ app.post("/api/gerar", async (req, res) => {
 
     res.status(500).json({
       sucesso: false,
-      erro: "Erro ao pesquisar ofertas."
+      erro: "Não foi possível pesquisar as ofertas."
     });
   }
 });
