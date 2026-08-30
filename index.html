@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OfertaBot Automático</title>
+  <title>OfertaBot</title>
 
   <style>
     * {
@@ -53,65 +53,83 @@
     }
 
     .card h2 {
+      color: #00e676;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #ccc;
+      line-height: 1.5;
       margin-bottom: 20px;
     }
 
     input {
       width: 100%;
-      padding: 15px;
-      margin-bottom: 12px;
-      border: 1px solid #353a49;
+      padding: 14px;
+      border: 1px solid #3a3f4d;
       border-radius: 10px;
-      background: #252936;
+      background: #0f1117;
       color: white;
       font-size: 16px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #00e676;
+      margin-bottom: 12px;
     }
 
     button {
       width: 100%;
-      padding: 16px;
+      padding: 14px;
       border: none;
       border-radius: 10px;
-      background: #00c853;
-      color: white;
+      background: #00e676;
+      color: #000;
       font-size: 17px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:active {
-      transform: scale(0.98);
+    button:hover {
+      background: #00c853;
     }
 
     #resultado {
-      display: none;
       margin-top: 20px;
-      padding: 20px;
-      background: #20232d;
-      border-radius: 10px;
-      line-height: 1.6;
+      display: none;
     }
 
-    #resultado a {
+    .oferta {
+      background: #0f1117;
+      border: 1px solid #292d3a;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 12px;
+    }
+
+    .oferta h3 {
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .preco {
       color: #00e676;
+      font-size: 24px;
       font-weight: bold;
-      text-decoration: none;
+      margin-bottom: 12px;
     }
 
-    .online {
-      color: #00e676;
+    .link {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      background: #00e676;
+      color: #000;
+      padding: 12px;
+      border-radius: 8px;
       font-weight: bold;
     }
 
     footer {
       text-align: center;
       color: #777;
-      padding: 20px;
+      padding: 30px 20px;
     }
   </style>
 </head>
@@ -120,45 +138,62 @@
 
   <header>
     <h1>🤖 OfertaBot</h1>
-    <p>Gerador de ofertas automático</p>
+    <p>Encontre ofertas de forma rápida e fácil</p>
   </header>
 
   <main>
 
     <div class="card">
-      <h2>📦 Criar oferta</h2>
+      <h2>🔎 Procurar oferta</h2>
+
+      <p>
+        Digite o nome do produto que você está procurando.
+      </p>
 
       <input
         type="text"
         id="produto"
-        placeholder="Nome do produto"
+        placeholder="Ex: celular, notebook, fone..."
       >
 
-      <input
-        type="text"
-        id="preco"
-        placeholder="Preço"
-      >
-
-      <input
-        type="url"
-        id="link"
-        placeholder="Link do produto"
-      >
-
-      <button onclick="gerarOferta()">
-        🚀 Gerar oferta
+      <button onclick="buscarOferta()">
+        Procurar oferta
       </button>
 
       <div id="resultado"></div>
     </div>
 
-    <div class="card">
-      <h2>⚡ Status</h2>
-      <p class="online">● OfertaBot online</p>
-    </div>
-
   </main>
 
   <footer>
+    OfertaBot © 2026
+  </footer>
+
+  <script>
+    function buscarOferta() {
+      const produto = document.getElementById("produto").value.trim();
+      const resultado = document.getElementById("resultado");
+
+      if (produto === "") {
+        resultado.style.display = "block";
+        resultado.innerHTML =
+          "<p style='color:#ff5252;'>Digite um produto primeiro.</p>";
+        return;
+      }
+
+      const busca = encodeURIComponent(produto);
+
+      resultado.style.display = "block";
+
+      resultado.innerHTML = `
+        <div class="oferta">
+          <h3>🛒 ${produto}</h3>
+
+          <p>
+            Clique abaixo para pesquisar ofertas desse produto.
+          </p>
+
+          <a
+            class="link"
+           
    
